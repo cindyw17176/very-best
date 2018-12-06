@@ -7,7 +7,7 @@ class DishesController < ApplicationController
   end
 
   def show
-    @bookmark = Bookmark.new
+    @bookmark = Bookmark.where({ user_id: current_user.id, dish_id: params.fetch("id")})
     @dish = Dish.find(params.fetch("id"))
 
     render("dishes_templates/show.html.erb")
