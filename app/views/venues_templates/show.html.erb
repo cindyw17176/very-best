@@ -41,9 +41,37 @@
               </small>
               </li>
               <% end %>
-            
-             <li class="list-group-item">
              
+             <li class="list-group-item">
+          
+              <form action="/create_bookmark" method="post">
+
+      <div class="form-group">
+        <%= select_tag(:dish_id, options_from_collection_for_select(Dish.all, :id, :name), :class => "form-control") %>
+      </div>
+      
+
+      <input type="hidden" name="user_id" value="<%= current_user.id %>">
+      <input type="hidden" name="venue_id" value="<%= @venue.id %>">
+      <input type="hidden" name="notes" value="">
+
+      <button class="btn btn-success">
+        Favorite
+      </button>
+      or
+      <a href="/bookmarks">Cancel</a>
+    </form>
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
 
               
             </li>

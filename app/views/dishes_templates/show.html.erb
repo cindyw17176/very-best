@@ -31,10 +31,11 @@
        
            <% @bookmark.each do |bookmark| %>
               <li class="list-group-item">
+              <p>
               <a href="/venues/<%= bookmark.venue_id %>">
                 <%= Venue.find(bookmark.venue_id).name %>
               </a>
-              
+              </p>
                 <small class="float-right text-muted">
                 <%= time_ago_in_words(bookmark.created_at) %> ago
                 <a href="/bookmarks/<%= bookmark.id%>/edit">

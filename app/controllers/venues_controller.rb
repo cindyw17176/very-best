@@ -1,6 +1,7 @@
 class VenuesController < ApplicationController
   def index
     @q = Venue.ransack(params.fetch("q", nil))
+    
     @venues = @q.result(:distinct => true).includes(:bookmarks, :neighborhood, :fans, :specialties).page(params.fetch("page", nil)).per(10)
     @dish = Dish.all
     @cuisine = Cuisine.all
