@@ -16,6 +16,14 @@ class VenuesController < ApplicationController
 
     render("venues_templates/index.html.erb")
   end
+  
+  def index2
+    @q = current_user.bookmarks.ransack(params.fetch("q", nil))
+    @bookmarks =  @q.result(:distinct => true).includes(:user, :venue, :dish).page(params.fetch("page", nil)).per(10)
+    @bookmarks = @bookmarks.uniq{|x| x.venue.id}
+    
+    render("venues_templates/index2.html.erb")
+  end
 
   def show
     @bookmark = Bookmark.where({ user_id: current_user.id, venue_id: params.fetch("id") })
