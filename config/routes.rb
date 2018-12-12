@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   post "/create_bookmark", :controller => "bookmarks", :action => "create"
 
   # READ
-  get "/bookmarks", :controller => "bookmarks", :action => "index"
+  get "/bookmarks", :controller => "venues", :action => "index2"
+  
   get "/bookmarks/:id", :controller => "bookmarks", :action => "show"
 
   # UPDATE
@@ -75,8 +76,9 @@ Rails.application.routes.draw do
   post "/create_venue", :controller => "venues", :action => "create"
 
   # READ
-  #get "/venues", :controller => "venues", :action => "index"
+  get "/venues", :controller => "bookmarks", :action => "index"
   get "/dishes", :controller => "venues", :action => "index"
+  
   get "/venues/:id", :controller => "venues", :action => "show"
 
   # UPDATE
