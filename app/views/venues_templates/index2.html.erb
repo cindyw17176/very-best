@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1>Bookmarks </h1>
+  <h1> </h1>
 </div>
   <div class="row div class">
     <div class="col-md-2"> 
@@ -29,15 +29,27 @@
    
   <div class="col-md-8"> 
     <table class="table table-hover">
-      <tr>
+      <caption>
+       <tr>
         <th>Places you've bookmarked</th>
         <th></th>
       </tr>
+      </caption>
+      
+    
+        <div class="card-body">
+        <div id="location_map" style="height: 360px;"></div>
+        
+      </div>
+      
+      </tr>
+      
+       
       
       <% @venues.each do |venue| %>
        <tr>
-       <th><a href="venues/<%= venue.venue.id %>"><%= venue.venue.name %></a></th> 
-       <th><%= venue.venue.neighborhood.name %>, <%= venue.venue.neighborhood.city %></th>
+       <td width="240"><a href="venues/<%= venue.venue.id %>"><%= venue.venue.name %></a></td> 
+       <td width="300"><div class="float-right"><%= venue.venue.neighborhood.name %>, <%= venue.venue.neighborhood.city %></div></td>
       </tr>
       <% end %>
      
@@ -47,3 +59,24 @@
   <div class="col-md-2">  <a href="/venues/new" class="btn btn-md btn-success">Add a new venue</a></div>
 
 </div>
+
+<script src="//maps.google.com/maps/api/js?v=3.24&key=AIzaSyA5qwIlcKjijP_Ptmv46mk4cCjuWhSzS78"></script>
+<script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>
+<script>
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'location_map'}}, function(){
+    <% @venues.each do |venue| %>
+    <% if venue.venue.address_longitude != nil %>
+    markers = handler.addMarkers([
+      {
+        "lat": <%= venue.venue.address_latitude %>,
+        "lng": <%= venue.venue.address_longitude %>,
+        "infowindow": "<h5><%= venue.venue.created_at %></h5><small><%= venue.venue.address_formatted_address %></small>"
+      }
+    ]);
+    <% end %>
+    <% end %>
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+  });
+</script>
