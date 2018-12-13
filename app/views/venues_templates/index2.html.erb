@@ -56,7 +56,9 @@
     </table>
 
   </div>
-  <div class="col-md-2">  <a href="/venues/new" class="btn btn-md btn-success">Add a new venue</a></div>
+  <div class="col-md-2">  <a href="/venues/new" class="btn btn-md btn-success">Add a new venue</a>
+  </div>
+ 
 
 </div>
 
@@ -65,18 +67,22 @@
 <script>
   handler = Gmaps.build('Google');
   handler.buildMap({ provider: {}, internal: {id: 'location_map'}}, function(){
+    
     <% @venues.each do |venue| %>
-    <% if venue.venue.address_longitude != nil %>
+    <% if venue.venue.address_longitude != nil and venue.venue.address_latitude != nil %>
     markers = handler.addMarkers([
       {
         "lat": <%= venue.venue.address_latitude %>,
         "lng": <%= venue.venue.address_longitude %>,
         "infowindow": "<h5><%= venue.venue.created_at %></h5><small><%= venue.venue.address_formatted_address %></small>"
       }
+     
     ]);
-    <% end %>
-    <% end %>
-    handler.bounds.extendWith(markers);
+     handler.bounds.extendWith(markers);
     handler.fitMapToBounds();
+    <% end %>
+    <% end %>
+   
+    
   });
 </script>
